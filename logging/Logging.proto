@@ -26,6 +26,7 @@ option csharp_namespace = "SkyWalking.NetworkProtocol.V3";
 option go_package = "skywalking.apache.org/repo/goapi/collect/logging/v3";
 
 import "common/Common.proto";
+import "common/Command.proto";
 
 // Report collected logs into the OAP backend
 service LogReportService {
@@ -65,6 +66,9 @@ message LogData {
     TraceContext traceContext = 6;
     // [Optional] The available tags. OAP server could provide search/analysis capabilities based on these.
     LogTags tags = 7;
+    // [Optional] Since 9.0.0
+    // The layer of the service and servce instance. If absent, the OAP would set `layer`=`ID: 2, NAME: general`
+    string layer = 8;
 }
 
 // The content of the log data

@@ -26,6 +26,7 @@ option csharp_namespace = "SkyWalking.NetworkProtocol.V3";
 option go_package = "skywalking.apache.org/repo/goapi/collect/language/agent/v3";
 
 import "common/Common.proto";
+import "common/Command.proto";
 
 // Define the JVM metrics report service.
 service JVMMetricReportService {
@@ -75,14 +76,15 @@ enum PoolType {
 }
 
 message GC {
-    GCPhrase phrase = 1;
+    GCPhase phase = 1;
     int64 count = 2;
     int64 time = 3;
 }
 
-enum GCPhrase {
+enum GCPhase {
     NEW = 0;
     OLD = 1;
+    NORMAL = 2; // The type of GC doesn't have new and old phases, like Z Garbage Collector (ZGC)
 }
 
 // See: https://docs.oracle.com/javase/8/docs/api/java/lang/management/ThreadMXBean.html
@@ -90,12 +92,10 @@ message Thread {
     int64 liveCount = 1;
     int64 daemonCount = 2;
     int64 peakCount = 3;
-    int64 newStateThreadCount = 4;
-    int64 runnableStateThreadCount = 5;
-    int64 blockedStateThreadCount = 6;
-    int64 waitingStateThreadCount = 7;
-    int64 timedWaitingStateThreadCount = 8;
-    int64 terminatedStateThreadCount = 9;
+    int64 runnableStateThreadCount = 4;
+    int64 blockedStateThreadCount = 5;
+    int64 waitingStateThreadCount = 6;
+    int64 timedWaitingStateThreadCount = 7;
 }
 
 // See: https://docs.oracle.com/javase/8/docs/api/java/lang/management/ClassLoadingMXBean.html
